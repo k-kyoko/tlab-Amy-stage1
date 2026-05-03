@@ -1,0 +1,11 @@
+services:
+  jupyterlab-amy:
+    container_name: tlab-Amy-stage1
+    build: .
+    ports:
+      - "127.0.0.1:8889:8889"
+    volumes:
+      - .:/home/jovyan/work
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
