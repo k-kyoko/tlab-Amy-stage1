@@ -11,7 +11,6 @@ RUN mamba install -y -c conda-forge \
       "matplotlib=3.8.*" \
       "seaborn=0.13.*" \
       "pot" \
-      "giotto-tda" \
       "pytest=8.*" \
       "pytest-cov=4.*" \
       "jupyter_server=2.8.*" \
