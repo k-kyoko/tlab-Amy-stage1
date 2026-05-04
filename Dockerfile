@@ -10,6 +10,7 @@ RUN mamba install -y -c conda-forge \
       "scikit-learn=1.4.*" \
       "matplotlib=3.8.*" \
       "seaborn=0.13.*" \
+      "pingouin=0.6.1" \
       "pot" \
       "pytest=8.*" \
       "pytest-cov=4.*" \
