@@ -132,3 +132,46 @@ def plt_hist_winfo(
     if savepath is not None:
         plt.savefig(savepath)
     plt.show()
+
+
+def plt_cumulative_sim(
+    df_sim: pd.DataFrame,
+    savepath: str = None,
+):
+    words = df_sim['Word_Pair'].unique()
+    color_h1 = '#4daf4a'
+    color_h0 = '#e41a1c'
+    color_inc = '#cccccc'
+
+    if savepath is None:
+        save_dir = os.path.join(project_root, "outputs/figs/powercuml")
+    else:
+        save_dir = savepath
+    
+    for word in words:
+        df_word = df_sim[df_sim['Word_Pair'] == word].sort_values('N')
+        
+        fig, ax = plt.subplots(figsize=(6, 4))
+        x = np.arange(len(df_word['N']))
+        width = 0.6
+        
+        h1 = df_word['H1_Support(%)'].values
+        h0 = df_word['H0_Support(%)'].values
+        inc = df_word['Inconclusive(%)'].values
+        
+        ax.bar(x, h1, width, label='H1 Support', color=color_h1)
+        ax.bar(x, h0, width, bottom=h1, label='H0 Support', color=color_h0)
+        ax.bar(x, inc, width, bottom=h1+h0, label='Inconclusive', color=color_inc)
+        
+        ax.set_title(f"Word_Pair: {word}")
+        ax.set_xlabel("Sample Size")
+        ax.set_ylabel("Cumulative Percentage (%)")
+        ax.set_xticks(x)
+        ax.set_xticklabels(df_word['N'])
+        ax.set_ylim(0, 100)
+        ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.2), ncol=3)
+        plt.tight_layout()
+
+        savepath_ = os.path.join(save_dir, f"{word}.png")
+        plt.savefig(savepath_)
+        plt.close()
